@@ -11,6 +11,7 @@ export class PdfParseService implements IPdfTextExtractor {
 
     return {
       text: pdfData.text.trim(),
+      type: 'text-pdf',
       info: pdfData.info || {}
     };
   }
