@@ -1,12 +1,14 @@
 import { Router } from 'express';
-import multer from 'multer';
-import { uploadPdfText } from '../controllers/pdfText.controller';
+import { PdfTextController } from '../controllers/pdfText.controller';
+import { upload } from '../middlewares/uploadMiddleware';
 
 const router = Router();
-const upload = multer({ dest: 'src/uploads/' });
+const pdfTextController = new PdfTextController();
 
-// POST /api/pdf/text
-router.post('/upload', upload.single('file'), uploadPdfText);
+// POST /api/pdf/upload  ← protegida con token Bearer
+router.post('/upload', upload.single('file'), (req, res) =>
+  pdfTextController.uploadAndExtract(req, res)
+);
 
 export default router;
 
